@@ -1,0 +1,13 @@
+generating report:
+behave -f allure_behave.formatter:AllureFormatter -o reports/ features/OrangeLoginFeature.feature
+
+to run allure ser:
+install allure 1st in powershell as :
+
+Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+scoop install allure
+
+then:
+allure serve <directory>
+for example :
+allure serve reports\
