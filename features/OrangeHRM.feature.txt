@@ -1,6 +1,0 @@
-Feature: OrangeHRM Logo
-    Scenario: Logo presence on orange
-        Given Launch Chrome
-        When Open Orange
-        Then Verify
-        Then Close Browser
