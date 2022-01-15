@@ -11,8 +11,7 @@ Feature: End to end gist.github
      6.	As a user, I want to logout from gist.github.com
 
       Scenario: Sign in Gist
-        Given User successfully open browser
-        When  User access the website "https://gist.github.com/"
+        Given User successfully open browser and access the website "https://gist.github.com/"
         When  User Sign in  using  username "enter username" and password "enter password"
         Then  User successfully login
 
