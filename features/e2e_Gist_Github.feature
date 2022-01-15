@@ -10,19 +10,34 @@ Feature: End to end gist.github
      5.	As a user, I want to edit a gist
      6.	As a user, I want to logout from gist.github.com
 
-      Scenario: Create, Delete and Edit a gist
+      Scenario: Sign in Gist
         Given User successfully open browser
-        When  User open the "https://www.google.com" homepage
-        When  User Sign in  using  username "username" and password "password"
-        When  User create the gist, with filename "filename1", description "description" with content:
-              """
-                This is just a random content for automation #1
-              """
-        When  User create the gist, with filename "filename1", description "description" with content:
-              """
-                This is just a random content for automation #2
-              """
-        When  User check the list of gists
-        When  User delete a gist, with filename "filename1"
-        When  User edit a gist, with filename "filename2"
-        Then  User sucessfully logout
+        When  User access the website "https://gist.github.com/"
+        When  User Sign in  using  username "ahmadbustomi1507@gmail.com" and password "1234Sial"
+        Then  User successfully login
+
+     #  Scenario: Create Gist
+     #    Given User successfully login
+     #    When User check the list of the gist that has been created
+     #    When  User create the gist, with filename "filename1", description "description" with content:
+     #          """
+     #            This is just a random content for automation #1
+     #          """
+     #    Then  New Gist has been created
+     #
+     #  Scenario: Edit Gist
+     #    Given User successfully login
+     #    When User check the list of the gist that has been created
+     #    When User choose one of the gist to edit "i edit this"
+     #    Then The Gist has been edited
+     #
+     # Scenario: Delete Gist
+     #   Given User successfully login
+     #   When User check the list of the gist that has been created
+     #   When User choose one of the gist to delete
+     #   Then The gist has been deleted
+
+     Scenario: Sign out from Gist
+       Given User successfully login
+       When User sign out from the web
+       Then User successfully logout
