@@ -9,7 +9,7 @@ class response_builder(object):
     user_id         = 0
     title           = 'title'
     body            = 'body'
-    Bearer_token    = 'Bearer fef335fbc1a0fff32036392247e7cf221e7020793536ec4f5ecf3fa414902ea9'
+    Bearer_token    = 'Bearer <insert your token here>'
 
 post = response_builder()
 post.title = "Automation test 15/01/2022"
