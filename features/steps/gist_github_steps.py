@@ -5,13 +5,27 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium import webdriver
 driver_path = "E:\\Project\\PythonSeleniumProject\\ChromeWebdriver\\97.0.4692.71\\chromedriver.exe"
-driver = webdriver.Chrome(executable_path=driver_path)
-action =webdriver.ActionChains(driver)
+# driver = webdriver.Chrome(executable_path=driver_path)
+# action = webdriver.ActionChains(driver)
 
 @given('User successfully open browser and access the website "{website}"')
 def step_impl(context,website):
-    context.driver = driver
+    context.driver = webdriver.Chrome(executable_path=driver_path)
     context.driver.get(website)
+
+@step('User successfully login')
+def step_impl(context):
+    try:
+        context.driver = webdriver.Chrome(executable_path=driver_path)
+        user_details = context.driver.find_element_by_xpath("//details[contains(@class,'details-overlay')]")
+        user_details.click()
+        context.driver.implicitly_wait(1)
+        your_gist = context.driver.find_element_by_link_text("Your gists").is_displayed()
+        user_details.click()
+        assert your_gist == True, "User successfully Login"
+    except:
+        context.driver.quit()
+        assert False,"Username and password are incorrect"
 
 @when('User Sign in  using  username "{username}" and password "{password}"')
 def step_impl(context,username,password):
@@ -20,7 +34,7 @@ def step_impl(context,username,password):
             EC.presence_of_element_located((By.LINK_TEXT, "Sign in"))
         )
     finally:
-        driver.find_element_by_link_text("Sign in").click()
+        context.driver.find_element_by_link_text("Sign in").click()
 
     try:
         element = WebDriverWait(context.driver, 10).until(
@@ -32,15 +46,7 @@ def step_impl(context,username,password):
         context.driver.find_element_by_xpath("//input[contains(@type,'submit')]").click()
 
 
-@step('User successfully login')
-def step_impl(context):
-    context.driver = driver
-    user_details = context.driver.find_element_by_xpath("//details[contains(@class,'details-overlay')]")
-    user_details.click()
-    context.driver.implicitly_wait(1)
-    your_gist = context.driver.find_element_by_link_text("Your gists").is_displayed()
-    user_details.click()
-    assert your_gist == True, "User successfully Login"
+
 
 @then('User successfully logout')
 def step_impl(context):
