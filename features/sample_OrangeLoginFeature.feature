@@ -9,7 +9,7 @@ Feature: OrangeHRM Login
     Scenario Outline: Logo presence on orange
         Given i launch Chrome browser
         When i Open Orange HRM Homepage
-        And Enter username "<username>" and password "<password"
+        And Enter username "<username>" and password "<password>"
         And Click on login button
         Then user must successfully login to the dashboard page
 

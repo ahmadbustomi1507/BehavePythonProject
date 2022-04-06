@@ -19,7 +19,6 @@ post.body = "This is just a random post for an automation with BDD approach"
 @given('Successfully registered new user_id "{user_id}"')
 def step_impl(context,user_id):
     post.user_id = user_id
-    global Data = GET(api_test_gorest)
 
 @when('User create a new post')
 def step_impl(context):
