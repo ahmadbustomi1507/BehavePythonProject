@@ -2,7 +2,7 @@
 # from tools.Utility import *
 
 # from Utility import Send_Request
-import httpx
+# import httpx
 '''
 Description 
     Redeem SA Voucher with params as below:
@@ -44,7 +44,6 @@ Params = {
 #      client.close()
 
 # import asyncio
-import httpx
 
 async def API_REDEEM_VOUCHER_SA():
     async with httpx.AsyncClient() as client:

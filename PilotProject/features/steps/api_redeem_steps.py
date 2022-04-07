@@ -19,9 +19,10 @@ def step_impl(context):
         'MSISDN': context.msisdn_ro,
         'USERINPUT': context.msisdn_b
     }
-    context.response = api.API_REDEEM_VOUCHER_SA(
-        params = Params
-    )
+    # context.response = api.API_REDEEM_VOUCHER_SA(
+    #     params = Params
+    # )
+    context.response = 'debug'
 
 @then('User successfully hit the API with status code 200')
 def step_impl(context):

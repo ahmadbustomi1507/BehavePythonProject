@@ -3,7 +3,7 @@ Feature: API Test <insert name of the API here>
 
       @dynamic
       Scenario Outline: Redeem the voucher SA (Functionality Test)
-        Given User getting the <MSISDN_RO>,<MSISDN_Target>,<Voucher>,<HRN> from Releng
+        Given User getting the MSISDN RO : <MSISDN_RO>, MSISDN Target :<MSISDN_Target>, Voucher : <Voucher>, HRN : <HRN> from Releng
         When  User Hit the API with the payload
         Then  User successfully hit the API with status code 200
 

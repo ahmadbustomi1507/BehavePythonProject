@@ -1,6 +1,6 @@
 
 from features.tools.Utility import *
-
+from features.tools.Definition import *
 '''
 Description 
     Redeem SA Voucher with params as below:
@@ -18,10 +18,8 @@ Description
     
 '''
 
-# API Endpoint
-API_REDEEM_VOUCHER_SA_ENDPOINT = 'http://redeem-voucher-sa-sit.api.devgcp.excelcom.co.id/umb/menu/business/transferSa'
 
 # Request Builder
-def API_REDEEM_VOUCHER_SA_ENDPOINT(api = None, params=None ):
-    response = Send_Request(type= "GET", api_endpoint =api, Params =params)
+def API_REDEEM_VOUCHER_SA_ENDPOINT( params=None ):
+    response = Send_Request(type= "GET", api_endpoint =API_REDEEM_VOUCHER_SA_ENDPOINT, Params =params)
     return response

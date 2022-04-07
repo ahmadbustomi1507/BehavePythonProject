@@ -1,5 +1,7 @@
 
 from requests import *
+import json
+
 
 # Request Builder
 def Send_Request(type= "GET", api_endpoint =None, Params =None , Body={} ):
@@ -10,3 +12,12 @@ def Send_Request(type= "GET", api_endpoint =None, Params =None , Body={} ):
         pass
 
     return response
+
+# Parsing the JSON from external
+def json2dict(input_json={}):
+    return json.loads(input_json)
+
+
+def dict2json(input_dict={}):
+    return json.dumps(input_dict)
+

@@ -1,5 +1,7 @@
 
 import requests import *
+# API Endpoint
+API_REDEEM_VOUCHER_SA_ENDPOINT = 'http://redeem-voucher-sa-sit.api.devgcp.excelcom.co.id/umb/menu/business/transferSa'
 
 # Request Builder
 def Send_Request(type= "GET", api_endpoint =None, Params =None , Body={} ):
