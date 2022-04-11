@@ -1,17 +1,7 @@
 import behave
 import copy
 from tools import Utility as Ut
-
-
-#example
-def get_data_releng():
-
-    return [ \
-           ['nama testnya',{"MSISDN_Target": "1", "MSISDN_RO":"2", "Voucher" : "3","HRN": "4"}],
-            ['nama testnya', {"MSISDN_Target": "3", "MSISDN_RO": "4", "Voucher": "3", "HRN": "4"}],
-            ['nama testnya', {"MSISDN_Target": "2", "MSISDN_RO": "2", "Voucher": "1", "HRN": "4"}],
-    ]
-
+from tools import Definition as Definition
 
 def before_feature(context, feature):
     # # -- SET LOG LEVEL: behave --logging-level=ERROR ...
@@ -21,24 +11,49 @@ def before_feature(context, feature):
                 if type(s) == behave.model.ScenarioOutline
                 and 'dynamic' in s.tags )
 
-    #Access the Data from data releng
-    data_releng  = get_data_releng()
-
+    #Access the Data from data releng query
+    # data_releng  = q.query_mysql(context.feature.filename)
+    # print('filename {}'.format(context.feature.filename))
+    service_name = context.feature.filename
+    task_id      = '-'.join(service_name.split('-')[0:1])
+    print('task id {}'.format(task_id))
+    data_releng = Ut.query_mysql(config=Definition.qa_project_report_db, task_id="GX-1846")
+    context.feature.data_releng = data_releng
+    # print(data_releng)
+    '''
+    { 
+        'scenario_id' : {
+            'scenario_name' : <something>,
+            'service': <something>,
+            'action': <something>,
+            'taskid': <something>,
+            'data': {
+                param1:value1,
+                param2:value2 
+            }      
+         }, 
+        'scenario_name' : ,
+        'scenario_name' : ,
+    }
+    '''
     list_of_data = []
     if data_releng == None  :
         raise Exception("No data were parsed,recheck again in releng webpage")
     else:
-        #data_releng will be a dictionary
-        for data in data_releng :
+        # save the list of scenario
+        context.feature.scenario_list = list(data_releng.keys())
+        # print('data releng {}'.format(context.feature.scenario_list ))
+        for scenario_id in context.feature.scenario_list :
 
-            data_json = copy.deepcopy(data[1])
+            data_dict = copy.deepcopy(data_releng[scenario_id]['data'])
 
             # will be modified
-            data_dict =  Ut.json2dict(Ut.dict2json(data_json))
+            # data_dict =  Ut.json2dict(Ut.dict2json(data_json))
 
             # [{json1},{json2},{json3}]
             list_of_data.append(data_dict)
 
+    # print('list_of_data = {}'.format(list_of_data))
     # looping over test case
     for test in features:
         #looping over table each test case
@@ -59,5 +74,5 @@ def before_feature(context, feature):
 
                 test_table.table.rows.append(n)
 
-            print('Headings\t: {}'.format(test_table.table.headings))
-            [print('Rows\t\t:{}'.format(list(x)) ) for x in test_table.table.rows]
+            # print('Headings\t: {}'.format(test_table.table.headings))
+            # [print('Rows\t\t:{}'.format(list(x)) ) for x in test_table.table.rows]
