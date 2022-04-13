@@ -1,6 +1,6 @@
 
 from tools.Utility import *
-from tools.Definition import *
+from tools import Definition as Define
 
 '''
 Description 
@@ -44,9 +44,9 @@ Description
 '''
 
 # API Endpoint
-API_CUSTOM_ACTION_ENDPOINT = IP_ENV_SIT3 + 'custom-action'
+# API_CUSTOM_ACTION_ENDPOINT = IP_ENV_SIT3 + 'custom-action'
 
 # Request Builder
-def API_REDEEM_VOUCHER_SA_ENDPOINT(api_endpoint, params ):
-    response = Send_Request(type= "GET", api_endpoint =api_endpoint, Params =params)
+def API_CUSTOM_ACTION_ENDPOINT(env=None, params ):
+    response = Send_Request(type= "GET", api_endpoint =env + Define.API_CUSTOM_ACTION, Params =params)
     return response

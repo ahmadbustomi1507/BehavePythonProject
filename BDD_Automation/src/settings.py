@@ -2,58 +2,55 @@ import behave
 import copy
 from tools import Utility as Ut
 from tools import Definition as Definition
+import os
 
-def before_feature(context, feature):
-    # # -- SET LOG LEVEL: behave --logging-level=ERROR ...
-    # # on behave command-line or in "behave.ini".
-    # print ('ini before all')
+def post_test(context, feature):
+    print ('------------END THE PROJECT ---------------------')
+    return True
+
+def initialized(context, feature):
+    print ('------------START THE PROJECT ---------------------')
     features = (s for s in feature.scenarios
                 if type(s) == behave.model.ScenarioOutline
                 and 'dynamic' in s.tags )
 
-    #Access the Data from data releng query
-    # data_releng  = q.query_mysql(context.feature.filename)
-    # print('filename {}'.format(context.feature.filename))
-    service_name = context.feature.filename
-    task_id      = '-'.join(service_name.split('-')[0:1])
-    print('task id {}'.format(task_id))
-    data_releng = Ut.query_mysql(config=Definition.qa_project_report_db, task_id="GX-1846")
-    context.feature.data_releng = data_releng
-    # print(data_releng)
-    '''
-    { 
-        'scenario_id' : {
-            'scenario_name' : <something>,
-            'service': <something>,
-            'action': <something>,
-            'taskid': <something>,
-            'data': {
-                param1:value1,
-                param2:value2 
-            }      
-         }, 
-        'scenario_name' : ,
-        'scenario_name' : ,
+    # on going parsing the feature name and extract the jira number to query from releng
+    feature_name                 = os.path.basename(context.feature.filename)
+    # context.feature.feature_name = feature_name
+    task_id                      = '-'.join(feature_name.split('_')[0:2])
+
+    # Query the Data from data releng query
+    # data_releng = Ut.query_mysql(config=Definition.qa_project_report_db, task_id="GX-1846")
+    data_test = Ut.query_mysql(config=Definition.qa_project_report_db, task_id=task_id)
+
+    test = {}
+    for x in data_test.keys():
+        test_id       = copy.deepcopy(x)
+        test[x] = data_test[test_id]['scenario_name']
+
+    context.feature.data_environtment = {
+        'feature_name': feature_name,
+        'env': 'http://roaming-vas-sit.api.devgcp.excelcom.co.id/',
+        'test' : test
     }
-    '''
+
     list_of_data = []
-    if data_releng == None  :
+    if data_test == None  :
         raise Exception("No data were parsed,recheck again in releng webpage")
     else:
         # save the list of scenario
-        context.feature.scenario_list = list(data_releng.keys())
+        context.feature.scenario_list = list(data_test.keys())
         # print('data releng {}'.format(context.feature.scenario_list ))
         for scenario_id in context.feature.scenario_list :
 
-            data_dict = copy.deepcopy(data_releng[scenario_id]['data'])
+            data_dict = copy.deepcopy(data_test[scenario_id]['data'])
 
-            # will be modified
-            # data_dict =  Ut.json2dict(Ut.dict2json(data_json))
+            # Added scenario name
+            data_dict['scenario_name'] = data_test[scenario_id]['scenario_name']
 
             # [{json1},{json2},{json3}]
             list_of_data.append(data_dict)
 
-    # print('list_of_data = {}'.format(list_of_data))
     # looping over test case
     for test in features:
         #looping over table each test case

@@ -34,6 +34,7 @@ def query_mysql(config=None, task_id = None):
         sql_select_Query = "SELECT scenario_name,scenario_id,service,action,taskid,param_name,param_value " + \
                            "FROM testcase_jest " +\
                            "WHERE taskid = '{}' ".format(task_id)
+        print('query : {}'.format(sql_select_Query))
         cursor = db_connection.cursor()
         cursor.execute(sql_select_Query)
         # get all records
@@ -67,3 +68,13 @@ def query_mysql(config=None, task_id = None):
             dict_data_test[data_test[1]]['taskid']      =  data_test[4]
             dict_data_test[data_test[1]]['data']        = {}
     return dict_data_test
+
+# #debug
+# data_releng = query_mysql(config= {
+#     "host" : "10.23.41.160",
+#     "user" : "root",
+#     "password" : "password*1",
+#     "database" : "qafprojectreport",
+#     "port"     : "3306"
+# }, task_id="GX-1846")
+# print(data_releng)

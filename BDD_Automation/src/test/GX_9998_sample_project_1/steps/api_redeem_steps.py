@@ -1,7 +1,5 @@
 from API import redeem_voucher_sa as api
 
-# from features.API.redeem_voucher_sa import * API_REDEEM_VOUCHER_SA
-
 
 @Given('User getting the {msisdn_ro},{msisdn_b},{voucher},{hrn} from Releng')
 def step_impl(context,msisdn_ro,msisdn_b,voucher,hrn):

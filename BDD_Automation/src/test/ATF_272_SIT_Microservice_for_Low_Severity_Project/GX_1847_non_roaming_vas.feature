@@ -1,6 +1,5 @@
-#sample 1
-Feature: roaming-vas-service
 
+Feature: GX_1846_roaming_vas
       @dynamic
       Scenario Outline: getSubscriberDetails
         Given User getting the MSISDN Target : <msisdn> with type : <type>
@@ -8,7 +7,5 @@ Feature: roaming-vas-service
         Then  User successfully hit the API with status code 200
 
         Examples: Dynamic
-        |msisdn        | type |
-        |.             |.     |
-
-
+        | scenario_name |msisdn        | type |
+        |.              |.             |.     |
