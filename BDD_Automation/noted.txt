@@ -2,8 +2,12 @@
 Running the test
 >behave <feature> --tags=<name_of_tags> --no-capture  --no-color
 
->behave -f allure_behave.formatter:AllureFormatter -o
+>behave -f allure_behave.formatter:AllureFormatter -o result2
+>behave -f allure -o result .\test\Jira_XXX_amdocs_project\amdocs.feature
 >allure serve result -h localhost -p 8080
+>https://behave.readthedocs.io/en/latest/formatters.html
+>behave -f allure_behave.formatter:AllureFormatter -o allure-results -f pretty
+>.\test\Jira_XXX_amdocs_project\amdocs.feature
 
 Usage: allure [options] [command] [command options]
   Options:
