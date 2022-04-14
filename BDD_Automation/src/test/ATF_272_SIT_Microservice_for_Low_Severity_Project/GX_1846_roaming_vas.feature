@@ -1,6 +1,6 @@
 
 Feature: GX_1846_roaming_vas
-      Background: behave <feature_name> --tags=test1 --no-capture
+      Background: service for roaming vas
 
       @test1 @dynamic
       Scenario Outline: getSubscriberDetails
@@ -11,7 +11,7 @@ Feature: GX_1846_roaming_vas
 
         Examples: Dynamic
         | scenario_name |msisdn        | type |
-        |.              |.             |.     |
+        |1              |2             |3     |
 
       @test2 @putSubscriberDetails
       Scenario Outline: putSubscriberDetails

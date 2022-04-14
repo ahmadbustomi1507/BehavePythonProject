@@ -1,0 +1,5 @@
+
+Running the test
+>behave <feature> --tags=<name_of_tags> --no-capture  --no-color
+
+>bheave -f allure_behave.formatter:AllureFormatter -o

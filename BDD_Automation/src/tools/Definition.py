@@ -22,3 +22,6 @@ API_REDEEM_VOUCHER_SA_ENDPOINT = 'umb/menu/business/transferSa'
 # IP_ENV_SIT2 = 'http://10.24.139.15:9990/'
 # IP_ENV_SIT3 = 'http://10.24.139.15:9997/'
 API_CUSTOM_ACTION               = 'custom-action'
+
+
+API_SUBSCRIBER_PROFILE_INFO   = 'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id/subscriber/v1/profile?'

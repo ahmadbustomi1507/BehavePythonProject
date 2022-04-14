@@ -1,6 +1,7 @@
 
-from tools.Utility import *
+# from tools.Utility import *
 from tools import Definition as Define
+import httpx
 
 '''
 Description 
@@ -38,7 +39,7 @@ Description
     # 		{
     # 			"paramname": "TYPE",
     # 			"paramvalue": "PO"
-    # 		}
+    # 		}s
     # 	]
 
 '''
@@ -48,5 +49,7 @@ Description
 
 # Request Builder
 def API_CUSTOM_ACTION_ENDPOINT(env=None, params ):
-    response = Send_Request(type= "GET", api_endpoint =env + Define.API_CUSTOM_ACTION, Params =params)
-    return response
+    # response = Send_Request(type= "GET", api_endpoint =env + Define.API_CUSTOM_ACTION, Params =params)
+    return httpx.get(url=env + Define.API_CUSTOM_ACTION, params=Params)
+
+    # return response
