@@ -1,9 +1,6 @@
 Feature: amdocs-cm
 
   Scenario Outline:
-
-      @test_1
-      @dynamic
       Scenario Outline: Redeem the voucher SA (Functionality Test)
         Given User getting the MSISDN : <MSISDN>
         When  User Hit the API with the payload
@@ -11,9 +8,9 @@ Feature: amdocs-cm
 
         Examples: Dynamic
         |MSISDN |
-        |6287877244027
-6287877244036
-6287879346682
-6287879550484
-6287880570611
-6287880570613         |
+        |6287877244027|
+        |6287877244036|
+        |6287879346682|
+        |6287879550484|
+        |6287880570611|
+        |6287880570613|

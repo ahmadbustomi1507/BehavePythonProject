@@ -10,66 +10,70 @@ def post_test(context, feature):
 
 def initialized(context, feature):
     print ('------------START THE PROJECT ---------------------')
-    features = (s for s in feature.scenarios
-                if type(s) == behave.model.ScenarioOutline
-                and 'dynamic' in s.tags )
+    # features = (s for s in feature.scenarios
+    #             if type(s) == behave.model.ScenarioOutline
+    #             and 'dynamic' in s.tags )
 
     # on going parsing the feature name and extract the jira number to query from releng
     feature_name                 = os.path.basename(context.feature.filename)
     # context.feature.feature_name = feature_name
     task_id                      = '-'.join(feature_name.split('_')[0:2])
 
-    # Query the Data from data releng query
-    # data_releng = Ut.query_mysql(config=Definition.qa_project_report_db, task_id="GX-1846")
-    data_test = Ut.query_mysql(config=Definition.qa_project_report_db, task_id=task_id)
+    for s in feature.scenarios:
+        if type(s) == behave.model.ScenarioOutline and 'dynamic' in s.tags:
 
-    test = {}
-    for x in data_test.keys():
-        test_id       = copy.deepcopy(x)
-        test[x] = data_test[test_id]['scenario_name']
+            # Query the Data from data releng query
+            data_test = Ut.query_mysql(config=Definition.qa_project_report_db, task_id=task_id)
 
-    context.feature.data_environtment = {
-        'feature_name': feature_name,
-        'env': 'http://roaming-vas-sit.api.devgcp.excelcom.co.id/',
-        'test' : test
-    }
+            test = {}
+            for x in data_test.keys():
+                test_id       = copy.deepcopy(x)
+                test[x] = data_test[test_id]['scenario_name']
 
-    list_of_data = []
-    if data_test == None  :
-        raise Exception("No data were parsed,recheck again in releng webpage")
-    else:
-        # save the list of scenario
-        context.feature.scenario_list = list(data_test.keys())
-        # print('data releng {}'.format(context.feature.scenario_list ))
-        for scenario_id in context.feature.scenario_list :
+            context.feature.data_environtment = {
+                'feature_name': feature_name,
+                'env': 'http://roaming-vas-sit.api.devgcp.excelcom.co.id/',
+                'test' : test
+            }
 
-            data_dict = copy.deepcopy(data_test[scenario_id]['data'])
+            list_of_data = []
+            if data_test == None  :
+                raise Exception("No data were parsed,recheck again in releng webpage")
+            else:
+                # save the list of scenario
+                context.feature.scenario_list = list(data_test.keys())
+                # print('data releng {}'.format(context.feature.scenario_list ))
+                for scenario_id in context.feature.scenario_list :
 
-            # Added scenario name
-            data_dict['scenario_name'] = data_test[scenario_id]['scenario_name']
+                    data_dict = copy.deepcopy(data_test[scenario_id]['data'])
 
-            # [{json1},{json2},{json3}]
-            list_of_data.append(data_dict)
+                    # Added scenario name
+                    data_dict['scenario_name'] = data_test[scenario_id]['scenario_name']
 
-    # looping over test case
-    for test in features:
-        #looping over table each test case
-        for test_table in test.examples:
-            default = copy.deepcopy(test_table.table.rows[0])
-            test_table.table.rows = []
+                    # [{json1},{json2},{json3}]
+                    list_of_data.append(data_dict)
 
-            #looping over data list , type(data) = dict
-            for data in list_of_data:
-                #{"a": "1", "b": "2", "c": "3", "d": "4"}
-                data_dict_test = copy.deepcopy(data)
-                n = copy.deepcopy(default)
+            # looping over test case
+            for test in features:
+                #looping over table each test case
+                for test_table in test.examples:
+                    default = copy.deepcopy(test_table.table.rows[0])
+                    test_table.table.rows = []
 
-                row = [data_dict_test[x] for x in test_table.table.headings]
+                    #looping over data list , type(data) = dict
+                    for data in list_of_data:
+                        #{"a": "1", "b": "2", "c": "3", "d": "4"}
+                        data_dict_test = copy.deepcopy(data)
+                        n = copy.deepcopy(default)
 
-                # insert a row
-                n.cells = copy.deepcopy(row)
+                        row = [data_dict_test[x] for x in test_table.table.headings]
 
-                test_table.table.rows.append(n)
+                        # insert a row
+                        n.cells = copy.deepcopy(row)
 
-            # print('Headings\t: {}'.format(test_table.table.headings))
-            # [print('Rows\t\t:{}'.format(list(x)) ) for x in test_table.table.rows]
+                        test_table.table.rows.append(n)
+
+                    # print('Headings\t: {}'.format(test_table.table.headings))
+                    # [print('Rows\t\t:{}'.format(list(x)) ) for x in test_table.table.rows]
+        else:
+            pass
