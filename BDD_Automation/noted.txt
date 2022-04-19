@@ -1,14 +1,16 @@
 
 Running the test
 >behave <feature> --tags=<name_of_tags> --no-capture  --no-color
+--tags="@getSubscriberDetails and @automation"
 
 >behave -f allure_behave.formatter:AllureFormatter -o result2
 >behave -f allure -o result .\test\Jira_XXX_amdocs_project\amdocs.feature
->allure serve result -h localhost -p 8080
+>allure serve results -h localhost -p 8080
 >https://behave.readthedocs.io/en/latest/formatters.html
->behave -f allure_behave.formatter:AllureFormatter -o allure-results -f pretty
->.\test\Jira_XXX_amdocs_project\amdocs.feature
-
+>behave -f allure_behave.formatter:AllureFormatter -f pretty -o results .\test\Jira_XXX_amdocs_project\amdocs.feature --no-capture
+>behave -f allure -f pretty -o results .\test\Jira_XXX_amdocs_project\amdocs.feature --no-capture
+behave -f allure_behave.formatter:AllureFormatter -f pretty -o results features\step.feature --no-capture
+b
 Usage: allure [options] [command] [command options]
   Options:
     --help

@@ -1,5 +1,14 @@
 
-#Definition SOAR
+# SOAR
+SOAR_ENV_SIT1 = 'http://10.24.139.15:9991/'
+SOAR_ENV_SIT2 = 'http://10.24.139.15:9990/'
+SOAR_ENV_SIT3 = 'http://10.24.139.15:9997/'
+
+# Microservice
+MICRO_ENV_ENV1 =   'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id'
+MICRO_ENV_ENV2 =   'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id'
+MICRO_ENV_ENV3 =   'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id'
+
 
 #Definition Microservis
 qa_project_report_db = {
@@ -12,16 +21,13 @@ qa_project_report_db = {
 
 # API Endpoint
 # http://roaming-vas-sit.api.devgcp.excelcom.co.id/
-API_GET_SUBSCRIBER_DETAILS_ENDPOINT = 'sroamingvas/v1/ubscriberdetails'
+API_GET_SUBSCRIBER_DETAILS_ENDPOINT = 'http://roaming-vas-sit.api.devgcp.excelcom.co.id/roamingvas/v1/ubscriberdetails'
 # API Endpoint
 # http://redeem-voucher-sa-sit.api.devgcp.excelcom.co.id/
 API_REDEEM_VOUCHER_SA_ENDPOINT = 'umb/menu/business/transferSa'
 
-
-# IP_ENV_SIT1 = 'http://10.24.139.15:9991/'
-# IP_ENV_SIT2 = 'http://10.24.139.15:9990/'
-# IP_ENV_SIT3 = 'http://10.24.139.15:9997/'
 API_CUSTOM_ACTION               = 'custom-action'
+
 
 
 API_SUBSCRIBER_PROFILE_INFO   = 'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id/subscriber/v1/profile?'
