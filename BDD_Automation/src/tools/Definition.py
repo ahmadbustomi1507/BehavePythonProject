@@ -9,6 +9,8 @@ MICRO_ENV_ENV1 =   'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id'
 MICRO_ENV_ENV2 =   'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id'
 MICRO_ENV_ENV3 =   'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id'
 
+# Sample
+SAMPLE         = 'http://10.24.139.18:15000/executerq'
 
 #Definition Microservis
 qa_project_report_db = {
@@ -17,6 +19,15 @@ qa_project_report_db = {
     "password" : "password*1",
     "database" : "qafprojectreport",
     "port"     : "3306"
+}
+
+SOAR_TRCKTRACE_DB_ORACLE = {
+    'host_name': 'cbtcnboradb02',
+    "host": "10.23.41.88",
+    'service_name': 'DEVDB',
+    'user': 'SOAR_TRCKTRACE',
+    'password': 'T3rlaluMudahPasswordnya',
+    'port': '1521'
 }
 
 # API Endpoint

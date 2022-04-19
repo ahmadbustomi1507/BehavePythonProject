@@ -1,5 +1,5 @@
 
-import settings
+from tools import settings
 import allure
 import allure_commons
 

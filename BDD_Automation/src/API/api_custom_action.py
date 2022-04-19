@@ -48,7 +48,7 @@ Description
 # API_CUSTOM_ACTION_ENDPOINT = IP_ENV_SIT3 + 'custom-action'
 
 # Request Builder
-def API_CUSTOM_ACTION_ENDPOINT(env=None, params ):
+def API_CUSTOM_ACTION_ENDPOINT(env='', params ):
     # response = Send_Request(type= "GET", api_endpoint =env + Define.API_CUSTOM_ACTION, Params =params)
     return httpx.get(url=env + Define.API_CUSTOM_ACTION, params=Params)
 

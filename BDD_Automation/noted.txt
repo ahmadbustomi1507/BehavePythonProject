@@ -9,8 +9,8 @@ Running the test
 >https://behave.readthedocs.io/en/latest/formatters.html
 >behave -f allure_behave.formatter:AllureFormatter -f pretty -o results .\test\Jira_XXX_amdocs_project\amdocs.feature --no-capture
 >behave -f allure -f pretty -o results .\test\Jira_XXX_amdocs_project\amdocs.feature --no-capture
-behave -f allure_behave.formatter:AllureFormatter -f pretty -o results features\step.feature --no-capture
-b
+behave -f allure_behave.formatter:AllureFormatter -f pretty -o results .\test\SIT_630_BDD\SIT_646_Demo_Scenario.feature --no-capture
+
 Usage: allure [options] [command] [command options]
   Options:
     --help
