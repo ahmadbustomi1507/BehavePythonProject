@@ -1,83 +1,126 @@
+----------------------------------------------------------------------
+AUTOMATION TEST WITH BEHAVE PYTHON
+----------------------------------------------------------------------
 
-Running the test
->behave <feature> --tags=<name_of_tags> --no-capture  --no-color
---tags="@getSubscriberDetails and @automation"
+---------------------------------------------------------------------------------------------------------
+About:
+---------------------------------------------------------------------------------------------------------
+Running automation test by BDD style using Behave python
 
->behave -f allure_behave.formatter:AllureFormatter -o result2
->behave -f allure -o result .\test\Jira_XXX_amdocs_project\amdocs.feature
->allure serve results -h localhost -p 8080
->https://behave.readthedocs.io/en/latest/formatters.html
->behave -f allure_behave.formatter:AllureFormatter -f pretty -o results .\test\Jira_XXX_amdocs_project\amdocs.feature --no-capture
->behave -f allure -f pretty -o results .\test\Jira_XXX_amdocs_project\amdocs.feature --no-capture
-behave -f allure_behave.formatter:AllureFormatter -f pretty -o results .\test\SIT_630_BDD\SIT_646_Demo_Scenario.feature --no-capture
+---------------------------------------------------------------------------------------------------------
+Requirements:
+---------------------------------------------------------------------------------------------------------
+- Python 3.5 or above, recommended 3.10 (please include pip installation)
 
-Usage: allure [options] [command] [command options]
-  Options:
-    --help
-      Print commandline help.
-    -q, --quiet
-      Switch on the quiet mode.
-      Default: false
-    -v, --verbose
-      Switch on the verbose mode.
-      Default: false
-    --version\
-      Print commandline version.
-      Default: false
-  Commands:
-    generate      Generate the report
-      Usage: generate [options] The directories with allure results
-        Options:
-          -c, --clean
-            Clean Allure report directory before generating a new one.
-            Default: false
-          --config
-            Allure commandline config path. If specified overrides values from
-            --profile and --configDirectory.
-          --configDirectory
-            Allure commandline configurations directory. By default uses
-            ALLURE_HOME directory.
-          --profile
-            Allure commandline configuration profile.
-          -o, --report-dir, --output
-            The directory to generate Allure report into.
-            Default: allure-report
+---------------------------------------------------------------------------------------------------------
+INSTALLATION
+---------------------------------------------------------------------------------------------------------
+1. Running in CLI:
+	- pip install behave 
+	- pip install allure-behave
+	- pip install asyncio
+	- pip install bs4
+	- pip install cx-Oracle
+	- pip install mysql
+	- pip install requests
+	- pip install httpx
 
-    serve      Serve the report
-      Usage: serve [options] The directories with allure results
-        Options:
-          --config
-            Allure commandline config path. If specified overrides values from
-            --profile and --configDirectory.
-          --configDirectory
-            Allure commandline configurations directory. By default uses
-            ALLURE_HOME directory.
-          -h, --host
-            This host will be used to start web server for the report.
-          -p, --port
-            This port will be used to start web server for the report.
-            Default: 0
-          --profile
-            Allure commandline configuration profile.
+2. install Allure via powershell by executing (please refer to https://scoop.sh/)
+	- scoop install allure
+   
+---------------------------------------------------------------------------------------------------------   
+HOW TO RUN
+---------------------------------------------------------------------------------------------------------
+Execute the test
 
-    open      Open generated report
-      Usage: open [options] The report directory
-        Options:
-          -h, --host
-            This host will be used to start web server for the report.
-          -p, --port
-            This port will be used to start web server for the report.
-            Default: 0
+	> behave -f allure_behave.formatter:AllureFormatter -f pretty -o <output folder> <feature> --tags=<name_of_tags> --no-capture 
+   
+	for example:
+		> behave -f allure_behave.formatter:AllureFormatter -f pretty -o results .\test\SIT_630_BDD\SIT_646_Demo_Scenario.feature --no-capture
+	
+Show the results into host 
+	> allure serve results -h <host> -p <port> 
 
-    plugin      Generate the report
-      Usage: plugin [options]
-        Options:
-          --config
-            Allure commandline config path. If specified overrides values from
-            --profile and --configDirectory.
-          --configDirectory
-            Allure commandline configurations directory. By default uses
-            ALLURE_HOME directory.
-          --profile
-            Allure commandline configuration profile.
+	for example :
+		> allure serve results -h localhost -p 8080
+
+To publish the report 	
+	> allure generate results -o results_25042022
+	
+	currently we are using this https://github.com/MihanEntalpo/allure-single-html-file
+	to generate into one single html 
+	> python combine.py results
+	
+	
+---------------------------------------------------------------------------------------------------------	
+Overview
+---------------------------------------------------------------------------------------------------------
+
+Structure of the project:
+
+src -
+	|- API 
+	|
+	|- test - | 
+	|		  | - <Project name>-|
+	|								|- steps-|
+	|								|		 |- <service name>_steps.py
+	|								|
+	|								|- environtment.py
+	|								|- <service name>.feature 
+	|
+	|
+	|- tools
+	|
+	|- behave.ini
+
+
+API
+	Place the API Abstraction in here, the structure must be in a method , to be called by steps 
+test 
+	Place the test suite of each project here 
+tools
+	Put the IP port , api endpoint definition or any other static information in here, including
+	for the query method 
+behave.ini
+	special file to determine how behave will be executed, please refer to the documentation
+	
+---------------------------------------------------------------------------------------------------------
+Sample of Test 	
+---------------------------------------------------------------------------------------------------------
+In BDD style we configure each procedure in the test case as a method , in general these are the flow
+of the test in the BDD
+
+- environtment.py / before_feature(...)
+	This special method will always be run ONCE in every *.feature file, it will be used to get all of the
+	external data from table (query table) , and saved into a variable
+	
+- environtment.py / before_scenario(...)
+	This Special method will always be run ONCE in every scenario inside *.feature file, currently this function
+	will be replaced by Background
+
+- *.feature
+
+	Feature : name of feature 
+
+		Background : Some background
+			Given User prepared the list of data from external 
+			    |scenario_id|scenario_name |msisdn |
+				|.          |.             | .     |
+
+		Scenario : name of Scenario  
+			Given User using data  <msisdn>
+			When  User hit the API with payload
+			Then  User successfully hit the API with status code 200
+	
+	
+- environtment.py / after_scenario(...)
+	This special method will be run once in every after scenario  is done . It will be used to reset the target number
+	as before running the test
+	
+- environtment.py / after_feature(...)
+	This special method will be run after the feature is done. it will be planned to hit JIRA API, so the final result
+	will be integrated with JIRA
+
+
 

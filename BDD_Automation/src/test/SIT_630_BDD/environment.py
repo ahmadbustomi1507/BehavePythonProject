@@ -12,12 +12,13 @@ def before_feature(context,feature):
 
     #save it into environtment behave
     context.feature.data_environtment = copy.deepcopy(data)
+
     dict_data_test = data['test']
 
     allure.attach('''
     Getting the environtment test as:
-        'feature_name'  : {},
-        'environtment'  : {},
+        feature_name  : {},
+        environtment  : {},
     '''.format(data['feature_name'],data['env']),'data.txt', allure.attachment_type.TEXT)
 
     for s in feature.scenarios:
@@ -26,13 +27,19 @@ def before_feature(context,feature):
             if dict_data_test == None  :
                 raise Exception("No data were parsed,recheck again in releng webpage")
             else:
-                context.feature.scenario_list = list(dict_data_test.keys())
-                for scenario_id in context.feature.scenario_list :
+                # context.feature.scenario_list = list(dict_data_test.keys())
+                for scenario_id in list(dict_data_test.keys()) :
                     data_dict = copy.deepcopy(dict_data_test[scenario_id]['data'])
                     # Added scenario name
                     data_dict['scenario_name'] = dict_data_test[scenario_id]['scenario_name']
+
+                    # Added scenario id (only the jira code)
+                    id  = '-'.join(scenario_id.split('-')[0:2])
+                    data_dict['scenario_id']  =  id
+
                     # [{json1},{json2},{json3}]
                     list_of_data.append(data_dict)
+            context.feature.data_environtment['list_data'] = list_of_data
 
             # fill in the table in the tables of gherkin
             # for test in features:
@@ -55,8 +62,9 @@ def before_feature(context,feature):
                 # [print('Rows\t\t:{}'.format(list(x)) ) for x in test_table.table.rows]
         else:
             pass
-    allure.attach('{}'.format(list_of_data),'datatest.txt',allure.attachment_type.TEXT)
-    print('data test \n{}'.format(list_of_data))
+    allure.attach('{}'.format(list_of_data),'datatest.JSON',allure.attachment_type.JSON)
+
+    # print('data test \n{}'.format(list_of_data))
 
 @allure_commons.fixture
 def before_scenario(context,feature):
@@ -71,8 +79,22 @@ def before_scenario(context,feature):
 
 @allure_commons.fixture
 def after_feature(context,feature):
+    # add connection to JIRA
+    # input nya : Task_ID , Status
+
+    # add connection to Releng for Report email
+    # Query Update / API
     pass
 
 @allure_commons.fixture
 def after_scenario(context,feature):
     pass
+
+# @allure_commons.fixture
+# def after_all(context,feature):
+#     # add connection to JIRA
+#     # input nya : Task_ID , Status
+#
+#     # add connection to Releng for Report email
+#     # Query Update / API
+#     pass

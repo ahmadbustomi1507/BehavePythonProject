@@ -4,7 +4,16 @@ import json
 import httpx
 import MySQLdb
 import copy
+import os
+import sys
+
 import cx_Oracle
+try:
+    cx_Oracle.init_oracle_client(lib_dir=r'tools\instantclient_21_3')
+except Exception as err:
+    print("Whoops!")
+    print(err);
+    sys.exit(1);
 
 # Request Builder
 # def Send_Request(type= "GET", api_endpoint =None, Params =None , Body={} ):
@@ -26,39 +35,20 @@ def dict2json(input_dict={}):
     return json.dumps(input_dict)
 
 def query_oracle(config=None,query=''):
+
     dsn_tns = cx_Oracle.makedsn(config['host'],
-                                config['port'],
+                                int(config['port']),
                                 service_name=config['service_name'])
+
     conn = cx_Oracle.connect(user=config['user'],
                              password=config['password'],
-                             dsn=dsn_tns)
-    # SOAR_TRCKTRACE_DB_ORACLE = {
-    #     'host_name': 'cbtcnboradb02',
-    #     "host": "10.23.41.88",
-    #     'service_name': 'DEVDB',
-    #     'user': 'SOAR_TRCKTRACE',
-    #     'password': 'T3rlaluMudahPasswordnya',
-    #     'port': '1521'
-    # }
-    '''
-    select
-    msisdn, sys_creation_date, soccd, serviceid, completionstatus, CD_MAIN_ID, esbuuid, policyname, operationname, expirationdate, benefittype, exceptioncode, exceptiondescription
-    from SOARTT_MISCKPI
-    where
-    msisdn = '6287868381200'
-    order
-    by
-    sys_creation_date
-    desc;
-    
-    '''
-
-    records  = conn.cursor()
-    # records = query.execute('select * from database.table') # use triple quotes if you want to spread your query across multiple lines
-    records = query.execute('select * from database.table') # use triple quotes if you want to spread your query across multiple lines
-    # for row in c:
-    #     print (row[0], '-', row[1]) # this only shows the first two columns. To add an additional column you'll need to add , '-', row[2], etc.
+                             dsn=dsn_tns,encoding="UTF-8")
+    cursor   = conn.cursor()
+    cursor.execute(query)
+    records  = cursor.fetchall()
+    # cursor.close()
     conn.close()
+
     return records
 
 def query_mysql(config=None, query = ''):
@@ -69,11 +59,6 @@ def query_mysql(config=None, query = ''):
                                              user=config['user'],
                                              password=config['password'] )
 
-        # sql_select_Query = "SELECT scenario_name,scenario_id,service,action,taskid,param_name,param_value " + \
-        #                    "FROM testcase_jest " +\
-        #                    "WHERE taskid = '{}' ".format(task_id)
-
-        # print('query : {}'.format(query))
         cursor = db_connection.cursor()
         cursor.execute(query)
         # get all records

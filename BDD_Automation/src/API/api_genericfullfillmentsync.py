@@ -4,8 +4,9 @@ sys.path.append('.')
 import httpx
 from tools import Definition as Define
 
-def API_GENERICFULLFILLMENT_SYNC_ENDPOINT(data ={},json={} ):
-    return httpx.post(url=Define.SAMPLE,
+async def main(data ={},json={}):
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        response = await client.post(url=Define.SAMPLE,
                       params={
                           'requestid':'a3d9caa0-9ba1-452c-bd6a-83a442eda9fe'
                       },
@@ -13,34 +14,21 @@ def API_GENERICFULLFILLMENT_SYNC_ENDPOINT(data ={},json={} ):
                             'Content-Type': 'application/json'
                       },
                       data= data,
-                      json=json)
+                      json=json,timeout=15.0)
+        return response
 
-# {'action': 'GENERICFULFILLMENTSYNC','param': [
-#     {'paramname': 'TOUCHPOINT','paramvalue': 'UMB'},
-#     {'paramname': 'MSISDN','paramvalue': '6287868381200'},
-#     {'paramname': 'ServiceID','paramvalue': '8211022'},
-#     {'paramname': 'PUSHNOTIFICATION','paramvalue': 'Y'}],'touchpoint': 'UMB'}
-# curl -L -X POST 'http://10.24.139.18:15000/executerq?requestid=a3d9caa0-9ba1-452c-bd6a-83a442eda9fe' \
-# -H 'Content-Type: application/json' \
-# --data-raw '{
-# 'action': 'GENERICFULFILLMENTSYNC',
-# 'param': [
-# {
-# 'paramname': 'TOUCHPOINT',
-# 'paramvalue': 'UMB'
-# },
-# {
-# 'paramname': 'MSISDN',
-# 'paramvalue': '6287868381200'
-# },
-# {
-# 'paramname': 'ServiceID',
-# 'paramvalue': '8211022'
-# },
-# {
-# 'paramname': 'PUSHNOTIFICATION',
-# 'paramvalue': 'Y'
-# }
-# ],
-# 'touchpoint': 'UMB'
-# }'
+def API_GENERICFULLFILLMENT_SYNC_ENDPOINT(data ={},json={} ,proxy=None, requestid='a3d9caa0-9ba1-452c-bd6a-83a442eda9fe'):
+    with httpx.Client(proxies=proxy) as client:
+        request = httpx.Request("POST",url=Define.SAMPLE,
+                      params={
+                          'requestid':requestid
+                      },
+                      headers={
+                            'Content-Type': 'application/json',
+                            'accept':'*/*'
+                       },
+                      data= data,
+                      json=json)
+        response = client.send(request)
+
+        return (request,response)
