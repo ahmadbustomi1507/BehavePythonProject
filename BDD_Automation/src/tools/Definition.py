@@ -39,6 +39,6 @@ API_REDEEM_VOUCHER_SA_ENDPOINT = 'umb/menu/business/transferSa'
 
 API_CUSTOM_ACTION               = 'custom-action'
 
-
-
 API_SUBSCRIBER_PROFILE_INFO   = 'http://amdocs-cm-sit.anthos-dev.intra.excelcom.co.id/subscriber/v1/profile?'
+
+API_JIRA_STATUS_ENDPOINT = 'https://collabs.xl.co.id/rest/api/2/issue/'
