@@ -33,7 +33,8 @@ HOW TO RUN
 ---------------------------------------------------------------------------------------------------------
 Execute the test
 
-	> behave -f allure_behave.formatter:AllureFormatter -f pretty -o <output folder> <feature> --tags=<name_of_tags> --no-capture 
+	> behave -f allure_behave.formatter:AllureFormatter -f pretty -o <output folder> <feature> --tags=<name_of_tags> 
+	--define <browser_name> --no-capture 
    
 for example:
 	> behave -f allure_behave.formatter:AllureFormatter -f pretty -o results .\testsuites\Sample_5_SIT_630_BDD\SIT_646_Demo_Scenario.feature --no-capture
