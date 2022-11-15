@@ -12,7 +12,7 @@ class response_builder(object):
     Bearer_token    = 'Bearer <insert your token here>'
 
 post = response_builder()
-post.title = "Automation test 15/01/2022"
+post.title = "Automation test_suite 15/01/2022"
 post.body = "This is just a random post for an automation with BDD approach"
 
 

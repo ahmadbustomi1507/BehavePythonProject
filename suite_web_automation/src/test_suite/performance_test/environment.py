@@ -71,10 +71,10 @@ def after_feature(context, feature):
 #             list_of_data.append(data_dict)
 #
 #     # print('list_of_data = {}'.format(list_of_data))
-#     # looping over test case
-#     for test in src:
-#         #looping over table each test case
-#         for test_table in test.examples:
+#     # looping over test_suite case
+#     for test_suite in src:
+#         #looping over table each test_suite case
+#         for test_table in test_suite.examples:
 #             default = copy.deepcopy(test_table.table.rows[0])
 #             test_table.table.rows = []
 #

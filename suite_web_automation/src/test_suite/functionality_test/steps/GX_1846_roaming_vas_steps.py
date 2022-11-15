@@ -5,13 +5,13 @@ from API import api_roaming_vas as api
 # res = asyncio.run( api.main(payload= '628319304251' ))
 # print(res.text)
 
-@step('get the test scenario name : {scenario_name}')
+@step('get the test_suite scenario name : {scenario_name}')
 def step_impl(context,scenario_name):
     print('\tscenario_name : {}\n\n'.format(scenario_name))
 
 @given(u'User getting the MSISDN Target : {msisdn}')
 def step_impl(context,msisdn):
-    print('\ttest 2\n\n')
+    print('\ttest_suite 2\n\n')
 
 @step('User getting the MSISDN Target : {msisdn} with type : {type}')
 def step_impl(context,msisdn,type):

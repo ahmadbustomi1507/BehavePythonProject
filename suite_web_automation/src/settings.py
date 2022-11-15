@@ -31,7 +31,7 @@ def initialized(context, feature):
     context.feature.data_environtment = {
         'feature_name': feature_name,
         'env': 'http://roaming-vas-sit.api.devgcp.excelcom.co.id/',
-        'test' : test
+        'test_suite' : test
     }
 
     list_of_data = []
@@ -51,9 +51,9 @@ def initialized(context, feature):
             # [{json1},{json2},{json3}]
             list_of_data.append(data_dict)
 
-    # looping over test case
+    # looping over test_suite case
     for test in features:
-        #looping over table each test case
+        #looping over table each test_suite case
         for test_table in test.examples:
             default = copy.deepcopy(test_table.table.rows[0])
             test_table.table.rows = []
