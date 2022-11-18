@@ -1,15 +1,54 @@
 from selenium import webdriver
+from selenium.webdriver import ActionChains
+# from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+
 from resource.tools import browser_path
+from selenium_stealth import stealth
+
 import datetime
+# https://stackoverflow.com/questions/56528631/is-there-a-version-of-selenium-webdriver-that-is-not-detectable/56529616#56529616
+# https://stackoverflow.com/questions/53039551/selenium-webdriver-modifying-navigator-webdriver-flag-to-prevent-selenium-detec/53040904#53040904
+# https://stackoverflow.com/questions/33225947/can-a-website-detect-when-you-are-using-selenium-with-chromedriver
+
+#fixing some issue
+from fake_useragent import UserAgent
 
 def before_all(context):
     context.tester_name     = "Tomi"
-    # context.config.format   = context.config.userdata['formatter']
-    # context.config.outfiles = 'E:\Project\BehavePythonProject\suite_web_automation\\results'
     context.browser = context.config.userdata["browser"].lower()
+
+
+    # random user agent
+    # ua         = UserAgent()
+    # user_agent = ua.random
+    # options.add_argument(f'user-agent={user_agent}')
+
     match context.browser:
         case "chrome":
-            context.driver = webdriver.Chrome(browser_path.use_chrome())
+            # Fixing some cookies/cache issue
+            options = Options()
+            options.add_argument("start-maximized")
+
+            # Chrome is controlled by automated test software
+            options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            options.add_experimental_option('useAutomationExtension', False)
+
+            service        = Service(browser_path.use_chrome())
+            context.driver = webdriver.Chrome(service=service,options=options)
+            context.action = ActionChains(context.driver)
+            stealth(context.driver,
+                    languages=["en-US", "en"],
+                    vendor="Google Inc.",
+                    platform="Win32",
+                    webgl_vendor="Intel Inc.",
+                    renderer="Intel Iris OpenGL Engine",
+                    fix_hairline=True,
+                    )
         case "firefox":
             pass
         case "opera":
@@ -25,7 +64,7 @@ def before_feature(context,feature):
     print(f"Date\t:{datetime.datetime.now()}\n\n")
 
 def after_feature(context,feature):
-    pass
+    context.driver.quit()
 
 def before_scenario(context,scenario):
     pass

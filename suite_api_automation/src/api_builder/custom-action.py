@@ -43,7 +43,7 @@ Description
 
 '''
 
-# API Endpoint
+# api_builder Endpoint
 API_CUSTOM_ACTION_ENDPOINT = IP_ENV_SIT3 + 'custom-action'
 
 # Request Builder

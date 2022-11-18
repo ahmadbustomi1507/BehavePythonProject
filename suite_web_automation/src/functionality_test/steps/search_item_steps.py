@@ -1,7 +1,3 @@
-@given(u'my first given')
-def step_impl(context):
-    context.driver.get("https://www.google.com/")
-    context.driver.quit()
 
 
 @when(u'user do something')
