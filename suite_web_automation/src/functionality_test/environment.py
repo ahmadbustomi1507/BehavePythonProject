@@ -3,11 +3,11 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from resource.tools import browser_path
-from selenium_stealth import stealth
 
 import datetime
 
 from fake_useragent import UserAgent
+from selenium_stealth import stealth
 
 def before_all(context):
     context.tester_name     = "Tomi"

@@ -1,6 +1,6 @@
 # sample behave
 # behave -f allure -o ./results .\src\functionality_test\test_search_item.feature
-# behave -f allure -f plain -o ./results .\src\mock_api\api_1_test.feature
+# behave -f allure -f plain -o -D browser=chrome ./results .\src\mock_api\api_1_test.feature
 import subprocess
 import argparse
 
