@@ -22,7 +22,6 @@ def before_all(context):
     context.tester_name     = "Tomi"
     context.browser = context.config.userdata["browser"].lower()
 
-
     # random user agent
     # ua         = UserAgent()
     # user_agent = ua.random
