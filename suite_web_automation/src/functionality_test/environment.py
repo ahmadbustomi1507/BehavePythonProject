@@ -28,14 +28,13 @@ def before_all(context):
             # Fixing some cookies/cache issue
             options = Options()
             options.add_argument("start-maximized")
-
             # deactivate automated test software, to by pass security
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option('useAutomationExtension', False)
-
+            # options.add_experimental_option("detach", True)
             service        = Service(browser_path.use_chrome())
             context.driver = webdriver.Chrome(service=service,options=options)
-            context.action = ActionChains(context.driver)
+            context.action = ActionChains(context.driver,duration=1000)
             stealth(context.driver,
                     languages=["en-US", "en"],
                     vendor="Google Inc.",
