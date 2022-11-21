@@ -11,6 +11,17 @@ class build_request(object):
         self.resource_path      = resource_path
         self.payload       = dict()
         self.params        = dict()
+        self.headers       = {
+            "Accept":"*/*",
+            "Connection":"keep-alive",
+            "Content-Type":"application/json"
+        }
+
+    # on progress
+    def add_headers(self,dict_headers):
+        for key in dict_headers.keys():
+            self.headers[key] = dict_headers[key]
+        return (self.headers, "headers has been  added")
 
     def add_payload_dict(self,dict_payload):
         self.payload= dict_payload
@@ -46,7 +57,15 @@ class build_request(object):
                                          data=self.payload,
                                          timeout=10)
             case "POST":
-                pass
+                print(f"Sending POST Request with description below:\n")
+                print(f"Url:\n{self.base_url}/{self.resource_path}")
+                print(f"Payload:\n{self.payload}")
+
+                response = httpx.request("POST",
+                                         url=f"{self.base_url}/{self.resource_path}",
+                                         data=self.payload,
+                                         params=self.params,
+                                         timeout=10)
             case "_":
                 pass
         return response
@@ -63,6 +82,6 @@ class build_request(object):
         return self.payload
 
 
-if __name__ == '__main__':
-    x = build_request('a','b')
-    print(x.get_payload())
+# if __name__ == '__main__':
+#     x = build_request('a','b')
+#     print(x.get_payload())

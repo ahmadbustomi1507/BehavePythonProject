@@ -1,5 +1,0 @@
-{
-  "property_1":12346,
-  "property_2": true,
-  "property_3":"this is a value of property 3"
-}

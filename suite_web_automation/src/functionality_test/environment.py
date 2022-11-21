@@ -1,21 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver import ActionChains
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.support.ui import WebDriverWait
-# from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-
 from resource.tools import browser_path
 from selenium_stealth import stealth
 
 import datetime
-# https://stackoverflow.com/questions/56528631/is-there-a-version-of-selenium-webdriver-that-is-not-detectable/56529616#56529616
-# https://stackoverflow.com/questions/53039551/selenium-webdriver-modifying-navigator-webdriver-flag-to-prevent-selenium-detec/53040904#53040904
-# https://stackoverflow.com/questions/33225947/can-a-website-detect-when-you-are-using-selenium-with-chromedriver
 
-#fixing some issue
 from fake_useragent import UserAgent
 
 def before_all(context):
@@ -27,13 +18,18 @@ def before_all(context):
     # user_agent = ua.random
     # options.add_argument(f'user-agent={user_agent}')
 
+    # fixing some issue
+    # https://stackoverflow.com/questions/56528631/is-there-a-version-of-selenium-webdriver-that-is-not-detectable/56529616#56529616
+    # https://stackoverflow.com/questions/53039551/selenium-webdriver-modifying-navigator-webdriver-flag-to-prevent-selenium-detec/53040904#53040904
+    # https://stackoverflow.com/questions/33225947/can-a-website-detect-when-you-are-using-selenium-with-chromedriver
+
     match context.browser:
         case "chrome":
             # Fixing some cookies/cache issue
             options = Options()
             options.add_argument("start-maximized")
 
-            # Chrome is controlled by automated test software
+            # deactivate automated test software, to by pass security
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option('useAutomationExtension', False)
 
