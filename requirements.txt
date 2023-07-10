@@ -1,13 +1,14 @@
 allure-behave==2.9.45
 allure-python-commons==2.9.45
 Appium-Python-Client==2.1.2
+autochromedriver==2.2.1
 async-generator==1.10
 atomicwrites==1.4.0
 attrs==20.3.0
 behave==1.2.6
 cattrs==1.10.0
-certifi==2021.10.8
-cffi==1.15.0
+# certifi==2021.10.8
+# cffi==1.15.0
 click==7.1.2
 colorama==0.4.4
 fake-useragent>=0.1.14
